@@ -194,8 +194,8 @@ play_again_btn = tk.Button(window, text='Jogar Novamente', width=30, bg='#4CAF50
 
 
 # Rodapé --------------------------------------------------------------
-rodape_label = tk.Label(window, text='By Yury Mota', font=('Verdana 5'), bg=background_color, fg=button_text_color)
-rodape_label.pack(side=tk.LEFT, anchor=tk.W, pady=10)
+rodape_label = tk.Label(window, text='By Yury Mota', font=('Verdana 6'), bg=background_color, fg='#000000')
+rodape_label.place(relx=0.10, rely=0.95, anchor=tk.N)
 
 display_question()
 window.mainloop()

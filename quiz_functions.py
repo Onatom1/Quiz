@@ -62,6 +62,10 @@ class QuizGame:
         self.play_again_btn = tk.Button(window, text='Jogar Novamente', width=30, bg='#4CAF50', fg='#FFFFFF', command=self.play_again, font=('Arial', 10, 'bold'))
 
         self.display_question()
+        
+        # Rodapé --------------------------------------------------------------
+        self.rodape_label = tk.Label(window, text='By Yury Mota', font=('Verdana 6'), bg='#FFFFFF', fg='#000000')
+        self.rodape_label.place(relx=0.10, rely=0.95, anchor=tk.N)
 
     def update_hearts(self):
         for i, heart_label in enumerate(self.hearts_labels):
