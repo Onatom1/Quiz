@@ -1,4 +1,3 @@
-# quiz_game.py
 import tkinter as tk
 from tkinter import messagebox
 from PIL import ImageTk, Image
@@ -12,7 +11,8 @@ class QuizGame:
         self.current_question = 0
         self.score = 0
         self.lives = 3
-        self.help_used = False
+        self.help_used = False # Variável do 50:50
+        self.skip_used = False  # Variável do Pular
 
         # Adiciona o caminho das imagens dos corações
         self.hearts_full_img = ImageTk.PhotoImage(Image.open('image/coracao-cheio.jpg').resize((30, 30)))
@@ -51,8 +51,13 @@ class QuizGame:
         self.option4_btn = tk.Button(window, text='', width=30, bg='#3498db', fg='#FFFFFF', state=tk.DISABLED, font=('Arial', 10, 'bold'))
         self.option4_btn.pack(pady=10)
 
+        # Botão 50:50    
         self.help_btn = tk.Button(window, text='50:50', width=9, height=2, bg='#3498db', fg='#FFFFFF', command=self.use_help, font=('Arial', 10, 'bold'))
         self.help_btn.place(relx=0.35, rely=0.78, anchor=tk.NE)
+
+        # Botão Pular
+        self.skip_btn = tk.Button(window, text='Pular', width=9, height=2, bg='#3498db', fg='#FFFFFF', command=self.skip_question, font=('Arial', 10, 'bold'))
+        self.skip_btn.place(relx=0.57, rely=0.78, anchor=tk.NE)
 
         self.play_again_btn = tk.Button(window, text='Jogar Novamente', width=30, bg='#4CAF50', fg='#FFFFFF', command=self.play_again, font=('Arial', 10, 'bold'))
 
@@ -103,6 +108,7 @@ class QuizGame:
         self.score = 0
         self.current_question = 0
         self.help_used = False
+        self.skip_used = False  # Reinicia a variável de pulo
         self.lives = 3
         self.update_hearts()
         random.shuffle(self.questions)
@@ -114,6 +120,7 @@ class QuizGame:
         self.option4_btn.config(state=tk.NORMAL)
 
         self.help_btn.config(state=tk.NORMAL)
+        self.skip_btn.config(state=tk.NORMAL)  # Habilita o botão de pular novamente
 
         self.play_again_btn.place_forget()
 
@@ -129,3 +136,11 @@ class QuizGame:
 
             self.help_used = True
             self.help_btn.config(state=tk.DISABLED)
+            
+
+    def skip_question(self):
+        if not self.skip_used:
+            self.current_question += 1
+            self.display_question()
+            self.skip_used = True
+            self.skip_btn.config(state=tk.DISABLED)  # Desabilita o botão de pular após o uso

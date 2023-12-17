@@ -10,7 +10,8 @@ import random
 score = 0
 current_question = 0
 lives = 3  # Vidas
-help_used = False
+help_used = False  # 50:50
+skip_used = False  # Variável do Pular
 
 # Ler o arquivo xlsx
 df = pd.read_excel('Perguntas.xlsx')
@@ -105,10 +106,11 @@ def show_result(message):
 
 # Função para Jogar novamente
 def play_again():
-    global score, current_question, lives, help_used
+    global score, current_question, lives, help_used, skip_used
     score = 0
     current_question = 0
-    help_used = False  # Reinicia a variável de ajuda usada
+    help_used = False  # Reinicia a variável do 50:50 usada
+    skip_used = False  # Reinicia a variável de pular usada
     lives = 3  # Reinicia o número de vidas
     update_hearts()  # Atualiza a exibição dos corações
     random.shuffle(questions)
@@ -122,6 +124,7 @@ def play_again():
 
     # Reconfigura o botão de ajuda para o estado normal
     help_btn.config(state=tk.NORMAL)
+    skip_btn.config(state=tk.NORMAL)
 
     play_again_btn.place_forget()  # Oculta o botão "Jogar Novamente"
     
@@ -146,6 +149,15 @@ def use_help():
 
         # Desabilita o botão de ajuda até o final do jogo
         help_btn.config(state=tk.DISABLED)
+        
+
+def skip_question():
+    global current_question, skip_used
+    if not skip_used:
+        current_question += 1
+        display_question()
+        skip_used = True
+        skip_btn.config(state=tk.DISABLED)  # Desabilita o botão de pular após o uso
 
 # LOGO:
 img_0 = Image.open('image/log.png')
@@ -173,7 +185,10 @@ option4_btn = tk.Button(window, text='', width=30, bg=button_color, fg=button_te
 option4_btn.pack(pady=10)
 
 help_btn = tk.Button(window, text='50:50', width=9, height=2, bg=button_color, fg=button_text_color, command=use_help, font=('Arial', 10, 'bold'))
-help_btn.place(relx=0.35, rely=0.78, anchor=tk.NE)  # Você pode ajustar 'pady' conforme necessário
+help_btn.place(relx=0.35, rely=0.78, anchor=tk.NE)
+
+skip_btn = tk.Button(window, text='Pular', width=9, height=2, bg=button_color, fg=button_text_color, command=skip_question, font=('Arial', 10, 'bold'))
+skip_btn.place(relx=0.57, rely=0.78, anchor=tk.NE)
 
 play_again_btn = tk.Button(window, text='Jogar Novamente', width=30, bg='#4CAF50', fg=button_text_color, command=play_again, font=('Arial', 10, 'bold'))
 
