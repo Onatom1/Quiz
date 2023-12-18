@@ -4,7 +4,7 @@ from quiz_functions import QuizGame
 import pandas as pd
 
 # Ler o arquivo xlsx
-df = pd.read_excel('Perguntas.xlsx')
+df = pd.read_excel('questions.xlsx')
 questions = df.sample(n=10).values.tolist()
 
 # Criando Janela
